@@ -1,3 +1,6 @@
+CREATE DATABASE europe_db;
+\c europe_db;
+
 CREATE TABLE tickets (
     id INT PRIMARY KEY AUTO_INCREMENT,
     evenement VARCHAR(100) NOT NULL,
@@ -39,3 +42,38 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+DELIMITER $$
+
+CREATE OR REPLACE PROCEDURE GetFullUserInfo(IN user_id INT)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    CREATE TEMP TABLE temp_user_info AS
+    SELECT u.id, u.username, u.email, ue.favorite_hobby, ue.account_creation_date
+    FROM user_db.users u
+    LEFT JOIN user_extra_db.user_extras ue ON u.id = ue.user_id
+    WHERE u.id = user_id;
+    
+    SELECT * FROM temp_user_info;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE OR REPLACE FUNCTION check_user_exists()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM user_db.users WHERE id = NEW.user_id) THEN
+        RAISE EXCEPTION 'User with id % does not exist in user_db', NEW.user_id;
+    END IF;
+    RETURN NEW;
+END $$
+
+DELIMITER ;
+
+CREATE TRIGGER before_insert_ticket
+BEFORE INSERT ON tickets
+FOR EACH ROW
+EXECUTE FUNCTION check_user_exists();

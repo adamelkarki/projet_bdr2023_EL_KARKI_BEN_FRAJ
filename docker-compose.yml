@@ -1,82 +1,84 @@
 version: '3.8'
 services:
   db_user:
-    image: mysql:8.0
+    image: citusdata/citus:10.2
     container_name: db_user
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: user_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user_password
+      POSTGRES_PASSWORD: root_password
+      POSTGRES_DB: user_db
+      POSTGRES_USER: user
     volumes:
-      - user_data:/var/lib/mysql
+      - user_data:/var/lib/postgresql/data
     ports:
-      - "3308:3306"
+      - "5432:5432"
 
   db_user_extra:
-    image: mysql:8.0
+    image: citusdata/citus:10.2
     container_name: db_user_extra
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: user_extra_db
-      MYSQL_USER: user_extra
-      MYSQL_PASSWORD: user_extra_password
+      POSTGRES_PASSWORD: root_password
+      POSTGRES_DB: user_extra_db
+      POSTGRES_USER: user_extra
     volumes:
-      - user_extra_data:/var/lib/mysql
+      - user_extra_data:/var/lib/postgresql/data
     ports:
-      - "3307:3306"
+      - "5433:5432"
 
   db_europe:
-    image: mysql:8.0
+    image: citusdata/citus:10.2
     container_name: db_europe
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: europe_db
-      MYSQL_USER: region_user
-      MYSQL_PASSWORD: region_password
+      POSTGRES_PASSWORD: root_password
+      POSTGRES_DB: europe_db
+      POSTGRES_USER: region_user
     volumes:
-      - europe_data:/var/lib/mysql
+      - europe_data:/var/lib/postgresql/data
     ports:
-      - "3310:3306"
+      - "5434:5432"
+    depends_on:
+      - db_user
 
   db_america:
-    image: mysql:8.0
+    image: citusdata/citus:10.2
     container_name: db_america
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: america_db
-      MYSQL_USER: region_user
-      MYSQL_PASSWORD: region_password
+      POSTGRES_PASSWORD: root_password
+      POSTGRES_DB: america_db
+      POSTGRES_USER: region_user
     volumes:
-      - america_data:/var/lib/mysql
+      - america_data:/var/lib/postgresql/data
     ports:
-      - "3311:3306"
+      - "5435:5432"
+    depends_on:
+      - db_user
 
   db_asia:
-    image: mysql:8.0
+    image: citusdata/citus:10.2
     container_name: db_asia
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: asia_db
-      MYSQL_USER: region_user
-      MYSQL_PASSWORD: region_password
+      POSTGRES_PASSWORD: root_password
+      POSTGRES_DB: asia_db
+      POSTGRES_USER: region_user
     volumes:
-      - asia_data:/var/lib/mysql
+      - asia_data:/var/lib/postgresql/data
     ports:
-      - "3312:3306"
+      - "5436:5432"
+    depends_on:
+      - db_user
 
   db_africa:
-    image: mysql:8.0
+    image: citusdata/citus:10.2
     container_name: db_africa
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: africa_db
-      MYSQL_USER: region_user
-      MYSQL_PASSWORD: region_password
+      POSTGRES_PASSWORD: root_password
+      POSTGRES_DB: africa_db
+      POSTGRES_USER: region_user
     volumes:
-      - africa_data:/var/lib/mysql
+      - africa_data:/var/lib/postgresql/data
     ports:
-      - "3313:3306"
+      - "5437:5432"
+    depends_on:
+      - db_user
 
 volumes:
   user_data:

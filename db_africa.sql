@@ -1,3 +1,6 @@
+CREATE DATABASE africa_db;
+\c africa_db;
+
 CREATE TABLE tickets (
     id INT PRIMARY KEY AUTO_INCREMENT,
     evenement VARCHAR(100) NOT NULL,
