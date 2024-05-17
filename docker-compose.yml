@@ -1,0 +1,87 @@
+version: '3.8'
+services:
+  db_user:
+    image: mysql:8.0
+    container_name: db_user
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: user_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+    volumes:
+      - user_data:/var/lib/mysql
+    ports:
+      - "3308:3306"
+
+  db_user_extra:
+    image: mysql:8.0
+    container_name: db_user_extra
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: user_extra_db
+      MYSQL_USER: user_extra
+      MYSQL_PASSWORD: user_extra_password
+    volumes:
+      - user_extra_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  db_europe:
+    image: mysql:8.0
+    container_name: db_europe
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: europe_db
+      MYSQL_USER: region_user
+      MYSQL_PASSWORD: region_password
+    volumes:
+      - europe_data:/var/lib/mysql
+    ports:
+      - "3310:3306"
+
+  db_america:
+    image: mysql:8.0
+    container_name: db_america
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: america_db
+      MYSQL_USER: region_user
+      MYSQL_PASSWORD: region_password
+    volumes:
+      - america_data:/var/lib/mysql
+    ports:
+      - "3311:3306"
+
+  db_asia:
+    image: mysql:8.0
+    container_name: db_asia
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: asia_db
+      MYSQL_USER: region_user
+      MYSQL_PASSWORD: region_password
+    volumes:
+      - asia_data:/var/lib/mysql
+    ports:
+      - "3312:3306"
+
+  db_africa:
+    image: mysql:8.0
+    container_name: db_africa
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: africa_db
+      MYSQL_USER: region_user
+      MYSQL_PASSWORD: region_password
+    volumes:
+      - africa_data:/var/lib/mysql
+    ports:
+      - "3313:3306"
+
+volumes:
+  user_data:
+  user_extra_data:
+  europe_data:
+  america_data:
+  asia_data:
+  africa_data:
