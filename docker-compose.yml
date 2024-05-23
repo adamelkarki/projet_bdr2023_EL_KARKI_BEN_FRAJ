@@ -1,28 +1,52 @@
 version: '3.8'
 services:
-  db_user:
+  db_user_auth:
     image: citusdata/citus:10.2
-    container_name: db_user
+    container_name: db_user_auth
     environment:
       POSTGRES_PASSWORD: root_password
-      POSTGRES_DB: user_db
-      POSTGRES_USER: user
+      POSTGRES_DB: user_auth_db
+      POSTGRES_USER: user_auth
     volumes:
-      - user_data:/var/lib/postgresql/data
+      - user_auth_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
-  db_user_extra:
+  db_user_profile:
     image: citusdata/citus:10.2
-    container_name: db_user_extra
+    container_name: db_user_profile
     environment:
       POSTGRES_PASSWORD: root_password
-      POSTGRES_DB: user_extra_db
-      POSTGRES_USER: user_extra
+      POSTGRES_DB: user_profile_db
+      POSTGRES_USER: user_profile
     volumes:
-      - user_extra_data:/var/lib/postgresql/data
+      - user_profile_data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+
+  db_user_activity:
+    image: citusdata/citus:10.2
+    container_name: db_user_activity
+    environment:
+      POSTGRES_PASSWORD: root_password
+      POSTGRES_DB: user_activity_db
+      POSTGRES_USER: user_activity
+    volumes:
+      - user_activity_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+
+  db_user_payment:
+    image: citusdata/citus:10.2
+    container_name: db_user_payment
+    environment:
+      POSTGRES_PASSWORD: root_password
+      POSTGRES_DB: user_payment_db
+      POSTGRES_USER: user_payment
+    volumes:
+      - user_payment_data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
 
   db_europe:
     image: citusdata/citus:10.2
@@ -34,7 +58,7 @@ services:
     volumes:
       - europe_data:/var/lib/postgresql/data
     ports:
-      - "5434:5432"
+      - "5436:5432"
     depends_on:
       - db_user
 
@@ -48,7 +72,7 @@ services:
     volumes:
       - america_data:/var/lib/postgresql/data
     ports:
-      - "5435:5432"
+      - "5437:5432"
     depends_on:
       - db_user
 
@@ -62,7 +86,7 @@ services:
     volumes:
       - asia_data:/var/lib/postgresql/data
     ports:
-      - "5436:5432"
+      - "5438:5432"
     depends_on:
       - db_user
 
@@ -76,7 +100,7 @@ services:
     volumes:
       - africa_data:/var/lib/postgresql/data
     ports:
-      - "5437:5432"
+      - "5439:5432"
     depends_on:
       - db_user
 
